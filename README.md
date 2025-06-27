@@ -37,6 +37,10 @@ export GIT_LOCAL_CREDENTIALS=[Your_Username]@[Your_Token]
 
 Then, save the file and run the following command to apply the changes:
 
+```bash
+source ~/.bashrc
+```
+
 
 **Setp 4**: Run the following commands to build CARLA:
 
