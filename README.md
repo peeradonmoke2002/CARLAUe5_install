@@ -4,17 +4,18 @@
 
 ## installation
 
-Setp 1: Git clone the repository
+**Setp 1**: Git clone the repository
 
 ```bash
 git clone -b ue5-dev https://github.com/carla-simulator/carla.git CarlaUE5
 ```
 
-Step 2 : Following to get repo Unreal Engine `5.5`
-To build CARLA, you need to use a special version of Unreal Engine 5.5 made for CARLA. To get this version, you must connect your GitHub account to Epic Games. You can do this by [clicking here](https://www.unrealengine.com/en-US/ue-on-github).
+**Step 2**: Get the Unreal Engine `5.5` repository
+
+To build CARLA, you need to use a special version of Unreal Engine 5.5 made for CARLA. To access this version, connect your GitHub account to Epic Games by [clicking here](https://www.unrealengine.com/en-US/ue-on-github).
 
 
-Step 3: set git local credential
+**Step 3**: set git local credential
 
 ```bash
 code ~/.bashrc
@@ -29,7 +30,7 @@ export GIT_LOCAL_CREDENTIALS=[Your_Username]@[Your_Token]
 Then, save the file and run the following command to apply the changes:
 
 
-setp 4: Run the following commands to build CARLA:
+**Setp 4**: Run the following commands to build CARLA:
 
 ```bash
 cd CarlaUE5
