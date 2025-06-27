@@ -2,7 +2,12 @@
  guide to installation carla ver ue5
 
 
-## installation
+## Table of Contents
+- [Installation](#installation)
+- [Trubleshooting](#troubleshooting)
+
+
+## Installation
 
 **Setp 1**: Git clone the repository
 
@@ -41,4 +46,15 @@ This will download and install Unreal Engine 5.5, install the prerequisites and 
 
 
 
+## Troubleshooting
+
+### Cmake Error
+
+If you face problems like this:
+
+```bash
+CMake Error at CMakeLists.txt:16 (cmake_minimum_required):
+  CMake 3.27.2 or higher is required.  You are running version 3.22.1
+```
+You need to install a newer version of CMake. You can do this by following these steps:
 
