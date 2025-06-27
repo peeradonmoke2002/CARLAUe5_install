@@ -7,7 +7,7 @@ Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5
 ## Table of Contents
 - [Installation](#installation)
 - [Trubleshooting](#troubleshooting)
-
+- [References](#references)
 
 
 ## Installation
@@ -61,3 +61,9 @@ CMake Error at CMakeLists.txt:16 (cmake_minimum_required):
 ```
 You need to install a newer version of CMake. You can do this by following these steps:
 
+
+
+
+## References
+- [CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
+- [CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
