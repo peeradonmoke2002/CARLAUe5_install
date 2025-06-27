@@ -2,13 +2,13 @@
 
 Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5 
 
----
+
 
 ## Table of Contents
 - [Installation](#installation)
 - [Trubleshooting](#troubleshooting)
 
----
+
 
 ## Installation
 
@@ -47,7 +47,7 @@ sudo -E ./CarlaSetup.sh
 This will download and install Unreal Engine 5.5, install the prerequisites and build CARLA. It may take some time to complete and use a significant amount of disk space.
 
 
----
+
 
 ## Troubleshooting
 
