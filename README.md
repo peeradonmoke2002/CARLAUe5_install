@@ -94,7 +94,7 @@ Launch CARLA:
 **For ROS2 interface:**
 
 ```bash
-./CarlaUnreal.sh -prefernvidia -nosound -carla-ros2
+./CarlaUnreal.sh -prefernvidia -nosound --ros2
 ```
 
 ![CARLA running](./images/carlar_package.png)
