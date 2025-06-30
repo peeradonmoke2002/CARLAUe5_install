@@ -60,7 +60,7 @@ sudo -E ./CarlaSetup.sh
 > **Note:** This process can take several hours and uses a lot of disk space.
 >
 > <p align="center">
->  <img src="./images/carlar_disk_use.png" alt="CARLA disk space use" width="350">
+>  <img src="./images/carlar_disk_use.png" alt="CARLA disk space use" width="450">
 > </p>
 
 ### **Step 5:** Launch CARLA in Unreal Editor
