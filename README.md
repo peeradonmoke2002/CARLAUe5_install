@@ -54,6 +54,8 @@ sudo -E ./CarlaSetup.sh
 
 This script will download and install Unreal Engine 5.5, install all prerequisites, and build CARLA.
 *Note: This process takes a long time and needs a lot of disk space.*
+![image](https://github.com/user-attachments/assets/c1cda102-bbd4-42ae-bc0d-3b59b0381756)
+
 
 ---
 
