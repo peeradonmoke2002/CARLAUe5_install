@@ -1,6 +1,8 @@
 # 🚗 CARLA Unreal Engine 5.5 Installation Guide
 
-Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5
+Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 5.5**
+
+---
 
 ## 📋 Table of Contents
 
@@ -12,116 +14,120 @@ Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5
 
 ## 🛠️ Installation
 
-**Step 1**: Clone the CARLA repository
+### **Step 1:** Clone the CARLA repository
 
 ```bash
 git clone -b ue5-dev https://github.com/carla-simulator/carla.git CarlaUE5
 ```
 
-**Step 2**: Get the Unreal Engine 5.5 repository
+### **Step 2:** Get Unreal Engine 5.5 repository
 
-To build CARLA, you need a specific version of Unreal Engine 5.5 prepared for CARLA.
-You must connect your GitHub account to Epic Games [here](https://www.unrealengine.com/en-US/ue-on-github) to get access.
+To build CARLA, you need a special version of Unreal Engine 5.5 prepared for CARLA.
+First, connect your GitHub account to Epic Games: [Epic's Unreal Engine on GitHub](https://www.unrealengine.com/en-US/ue-on-github).
 
-**Step 3**: Set Git local credentials
+Once authorized, **clone Unreal Engine 5.5** (must be on the same commit as recommended by CARLA docs).
 
-Edit your bash configuration:
+### **Step 3:** Set Git local credentials
+
+Edit your Bash configuration:
 
 ```bash
 code ~/.bashrc
 ```
 
-Add this line at the end (replace with your info):
+Add this line to the end (replace with your actual info):
 
 ```bash
 export GIT_LOCAL_CREDENTIALS=[Your_Username]@[Your_Token]
 ```
 
-> ✏️ Replace `[Your_Username]` and `[Your_Token]` with your actual GitHub username and a personal access token.
+> Replace `[Your_Username]` and `[Your_Token]` with your GitHub username and a personal access token (PAT).
 
-Then reload the config:
+Reload the config:
 
 ```bash
 source ~/.bashrc
 ```
 
-**Step 4**: Build CARLA
+### **Step 4:** Build CARLA
 
 ```bash
 cd CarlaUE5
 sudo -E ./CarlaSetup.sh
 ```
 
-This script will download and install Unreal Engine 5.5, install all prerequisites, and build CARLA.  
-> [!NOTE]
-> This process takes a long time and needs a lot of disk space.*
->
-> ![carlar disk space use](./images/carlar_disk_use.png)
+> This will download and install Unreal Engine 5.5, prerequisites, and build CARLA.
+> **Note:** This process can take several hours and uses a lot of disk space.
 
-**Step 5**: Try to Launching Carla - Unreal Editor
+![CARLA disk space use](./images/carlar_disk_use.png)
+
+### **Step 5:** Launch CARLA in Unreal Editor
 
 ```bash
 cmake --build Build --target launch
 ```
 
-![carla unreal editor](./images/carla_unreal_editor.png)
+![CARLA Unreal Editor](./images/carla_unreal_editor.png)
 
-**Step 6**: Build a package with CARLA UE5
+### **Step 6:** Build the CARLA package
 
 ```bash
 cmake --build Build --target package
 ```
-The package will be generated in the directory `CARLA_PATH/Build/Package`
 
-**Step 7**: Run CARLA package
+The generated package will be in `CarlaUE5/Build/Package`.
 
-first, navigate to the package directory:
+### **Step 7:** Run the CARLA package
+
+Navigate to the package directory:
+
 ```bash
 cd CarlaUE5/Build/Package/Carla-0.10.0-Linux-Shipping/Linux
 ```
-Then run the CARLA package:
+
+Launch CARLA:
 
 ```bash
 ./CarlaUnreal.sh -prefernvidia -nosound 
 ```
-Case `ros2` interface
+
+**For ROS2 interface:**
 
 ```bash
 ./CarlaUnreal.sh -prefernvidia -nosound -carla-ros2
 ```
 
-![carla running](./images/carlar_package.png)
+![CARLA running](./images/carlar_package.png)
 
 ---
 
 ## 🐞 Troubleshooting
 
-### ⚠️ CMake Error
+### ⚠️ CMake Version Error
 
-If you see an error like:
+If you see:
 
-```bash
+```
 CMake Error at CMakeLists.txt:16 (cmake_minimum_required):
-  CMake 3.27.2 or higher is required.  You are running version 3.22.1
+  CMake 3.27.2 or higher is required. You are running version 3.22.1
 ```
 
-Check which version of CMake is active:
+Check your active CMake version:
 
 ```bash
 cmake --version
-# Should output: cmake version 3.28.3 (or newer)
+# Should show: cmake version 3.28.3 (or newer)
 ```
 
-But sometimes `sudo cmake --version` still shows the wrong version:
+If `sudo cmake --version` shows an old version:
 
 ```bash
 sudo cmake --version
 # cmake version 3.22.1 (wrong)
 ```
 
-**💡 Solution:**  
-Make sure the correct version of CMake is called by the setup script.
-You can edit `CarlaSetup.sh` in the `CarlaUE5` directory to explicitly use the desired CMake binary, for example:
+**Solution:**
+Edit `CarlaSetup.sh` to explicitly set the desired CMake path. For example:
 
 ```bash
 /opt/cmake-3.28.3-linux-x86_64/bin/cmake -G Ninja -S . -B Build \
@@ -134,23 +140,21 @@ You can edit `CarlaSetup.sh` in the `CarlaUE5` directory to explicitly use the d
     -DCARLA_UNREAL_ENGINE_PATH=$CARLA_UNREAL_ENGINE_PATH
 ```
 
-### 🔒 Permissions Error when building
+### 🔒 Permissions Error
 
-If you encounter a permissions error during the build process, it may be due to the `CarlaSetup.sh` script or build folder not having execute permissions.
-
-**💡 Solution:**
-
-You can fix this by running:
+If you see a permission error during build:
 
 ```bash
 sudo chown -R $(whoami):$(whoami) Build/
-
-sudo chown -R $(whoami):$(whoami) {workspace_path}/CarlaUE5/Build/
+# Or for your workspace:
+sudo chown -R $(whoami):$(whoami) /path/to/CarlaUE5/Build/
 ```
-> For example  
-> ```bash
-> sudo chown -R $(whoami):$(whoami) /media/peeradon/Peeradon-SSD/CarlaUE5/Build
-> ```
+
+Example:
+
+```bash
+sudo chown -R $(whoami):$(whoami) /media/peeradon/Peeradon-SSD/CarlaUE5/Build
+```
 
 ---
 
@@ -158,3 +162,4 @@ sudo chown -R $(whoami):$(whoami) {workspace_path}/CarlaUE5/Build/
 
 * [📚 CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
 * [💻 CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
+
