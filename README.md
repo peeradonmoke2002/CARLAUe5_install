@@ -1,16 +1,16 @@
-# CARLA Unreal Engine 5.5 Installation Guide
+# 🚗 CARLA Unreal Engine 5.5 Installation Guide
 
 Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5
 
-## Table of Contents
+## 📋 Table of Contents
 
-* [Installation](#installation)
-* [Troubleshooting](#troubleshooting)
-* [References](#references)
+* [🛠️ Installation](#installation)
+* [🐞 Troubleshooting](#troubleshooting)
+* [🔗 References](#references)
 
 ---
 
-## Installation
+## 🛠️ Installation
 
 **Step 1**: Clone the CARLA repository
 
@@ -37,7 +37,7 @@ Add this line at the end (replace with your info):
 export GIT_LOCAL_CREDENTIALS=[Your_Username]@[Your_Token]
 ```
 
-> Replace `[Your_Username]` and `[Your_Token]` with your actual GitHub username and a personal access token.
+> ✏️ Replace `[Your_Username]` and `[Your_Token]` with your actual GitHub username and a personal access token.
 
 Then reload the config:
 
@@ -52,18 +52,16 @@ cd CarlaUE5
 sudo -E ./CarlaSetup.sh
 ```
 
-This script will download and install Unreal Engine 5.5, install all prerequisites, and build CARLA.
-*Note: This process takes a long time and needs a lot of disk space.*
-
+This script will download and install Unreal Engine 5.5, install all prerequisites, and build CARLA.  
+*⏳ Note: This process takes a long time and needs a lot of disk space.*
 
 ![image](https://github.com/user-attachments/assets/c1cda102-bbd4-42ae-bc0d-3b59b0381756)
 
-
 ---
 
-## Troubleshooting
+## 🐞 Troubleshooting
 
-### CMake Error
+### ⚠️ CMake Error
 
 If you see an error like:
 
@@ -86,7 +84,7 @@ sudo cmake --version
 # cmake version 3.22.1 (wrong)
 ```
 
-**Solution:**
+**💡 Solution:**  
 Make sure the correct version of CMake is called by the setup script.
 You can edit `CarlaSetup.sh` in the `CarlaUE5` directory to explicitly use the desired CMake binary, for example:
 
@@ -101,11 +99,11 @@ You can edit `CarlaSetup.sh` in the `CarlaUE5` directory to explicitly use the d
     -DCARLA_UNREAL_ENGINE_PATH=$CARLA_UNREAL_ENGINE_PATH
 ```
 
-### Permissions Error when building
-If you encounter a permissions error during the build process, it may be due to the `CarlaSetup.sh` script or build forlder not having execute permissions.
+### 🔒 Permissions Error when building
 
+If you encounter a permissions error during the build process, it may be due to the `CarlaSetup.sh` script or build folder not having execute permissions.
 
-**Solution:**
+**💡 Solution:**
 
 You can fix this by running:
 
@@ -114,16 +112,14 @@ sudo chown -R $(whoami):$(whoami) Build/
 
 sudo chown -R $(whoami):$(whoami) {workspace_path}/CarlaUE5/Build/
 ```
-> For example
+> For example  
 > ```bash
 > sudo chown -R $(whoami):$(whoami) /media/peeradon/Peeradon-SSD/CarlaUE5/Build
 > ```
 
-
 ---
 
-## References
+## 🔗 References
 
-* [CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
-* [CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
-
+* [📚 CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
+* [💻 CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
