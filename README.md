@@ -54,6 +54,8 @@ sudo -E ./CarlaSetup.sh
 
 This script will download and install Unreal Engine 5.5, install all prerequisites, and build CARLA.
 *Note: This process takes a long time and needs a lot of disk space.*
+
+
 ![image](https://github.com/user-attachments/assets/c1cda102-bbd4-42ae-bc0d-3b59b0381756)
 
 
@@ -108,10 +110,8 @@ If you encounter a permissions error during the build process, it may be due to 
 You can fix this by running:
 
 ```bash
-# 1. เปลี่ยน owner ของโฟลเดอร์ Build ให้เป็น user ของคุณ
 sudo chown -R $(whoami):$(whoami) Build/
 
-# ถ้าอยู่ใน external SSD ให้ระบุ path เต็ม เช่น
 sudo chown -R $(whoami):$(whoami) {workspace_path}/CarlaUE5/Build/
 ```
 > For example
