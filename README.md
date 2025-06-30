@@ -99,6 +99,27 @@ You can edit `CarlaSetup.sh` in the `CarlaUE5` directory to explicitly use the d
     -DCARLA_UNREAL_ENGINE_PATH=$CARLA_UNREAL_ENGINE_PATH
 ```
 
+### Permissions Error when building
+If you encounter a permissions error during the build process, it may be due to the `CarlaSetup.sh` script or build forlder not having execute permissions.
+
+
+**Solution:**
+
+You can fix this by running:
+
+```bash
+# 1. เปลี่ยน owner ของโฟลเดอร์ Build ให้เป็น user ของคุณ
+sudo chown -R $(whoami):$(whoami) Build/
+
+# ถ้าอยู่ใน external SSD ให้ระบุ path เต็ม เช่น
+sudo chown -R $(whoami):$(whoami) {workspace_path}/CarlaUE5/Build/
+```
+> For example
+> ```bash
+> sudo chown -R $(whoami):$(whoami) /media/peeradon/Peeradon-SSD/CarlaUE5/Build
+> ```
+
+
 ---
 
 ## References
