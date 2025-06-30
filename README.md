@@ -1,73 +1,106 @@
 # CARLA Unreal Engine 5.5 Installation Guide
 
-Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5 
-
-
+Guide to Install CARLA on Ubuntu 22.04 with Unreal Engine 5.5
 
 ## Table of Contents
-- [Installation](#installation)
-- [Trubleshooting](#troubleshooting)
-- [References](#references)
 
+* [Installation](#installation)
+* [Troubleshooting](#troubleshooting)
+* [References](#references)
+
+---
 
 ## Installation
 
-**Setp 1**: Git clone the repository
+**Step 1**: Clone the CARLA repository
 
 ```bash
 git clone -b ue5-dev https://github.com/carla-simulator/carla.git CarlaUE5
 ```
 
-**Step 2**: Get the Unreal Engine `5.5` repository
+**Step 2**: Get the Unreal Engine 5.5 repository
 
-To build CARLA, you need to use a special version of Unreal Engine 5.5 made for CARLA. To access this version, connect your GitHub account to Epic Games by [clicking here](https://www.unrealengine.com/en-US/ue-on-github).
+To build CARLA, you need a specific version of Unreal Engine 5.5 prepared for CARLA.
+You must connect your GitHub account to Epic Games [here](https://www.unrealengine.com/en-US/ue-on-github) to get access.
 
+**Step 3**: Set Git local credentials
 
-**Step 3**: set git local credential
+Edit your bash configuration:
 
 ```bash
 code ~/.bashrc
 ```
-Add the following line to the end of the file:
+
+Add this line at the end (replace with your info):
 
 ```bash
 export GIT_LOCAL_CREDENTIALS=[Your_Username]@[Your_Token]
 ```
-> Replace `[Your_Username]` and `[Your_Token]` with your actual GitHub username and personal access token.
 
-Then, save the file and run the following command to apply the changes:
+> Replace `[Your_Username]` and `[Your_Token]` with your actual GitHub username and a personal access token.
+
+Then reload the config:
 
 ```bash
 source ~/.bashrc
 ```
 
-
-**Setp 4**: Run the following commands to build CARLA:
+**Step 4**: Build CARLA
 
 ```bash
 cd CarlaUE5
 sudo -E ./CarlaSetup.sh
 ```
-This will download and install Unreal Engine 5.5, install the prerequisites and build CARLA. It may take some time to complete and use a significant amount of disk space.
 
+This script will download and install Unreal Engine 5.5, install all prerequisites, and build CARLA.
+*Note: This process takes a long time and needs a lot of disk space.*
 
-
+---
 
 ## Troubleshooting
 
-### Cmake Error
+### CMake Error
 
-If you face problems like this:
+If you see an error like:
 
 ```bash
 CMake Error at CMakeLists.txt:16 (cmake_minimum_required):
   CMake 3.27.2 or higher is required.  You are running version 3.22.1
 ```
-You need to install a newer version of CMake. You can do this by following these steps:
 
+Check which version of CMake is active:
 
+```bash
+cmake --version
+# Should output: cmake version 3.28.3 (or newer)
+```
 
+But sometimes `sudo cmake --version` still shows the wrong version:
+
+```bash
+sudo cmake --version
+# cmake version 3.22.1 (wrong)
+```
+
+**Solution:**
+Make sure the correct version of CMake is called by the setup script.
+You can edit `CarlaSetup.sh` in the `CarlaUE5` directory to explicitly use the desired CMake binary, for example:
+
+```bash
+/opt/cmake-3.28.3-linux-x86_64/bin/cmake -G Ninja -S . -B Build \
+    --toolchain=$PWD/CMake/Toolchain.cmake \
+    -DLAUNCH_ARGS="-prefernvidia" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENABLE_ROS2=ON \
+    -DPython_ROOT_DIR=${python_root} \
+    -DPython3_ROOT_DIR=${python_root} \
+    -DCARLA_UNREAL_ENGINE_PATH=$CARLA_UNREAL_ENGINE_PATH
+```
+
+---
 
 ## References
-- [CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
-- [CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
+
+* [CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
+* [CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
+
