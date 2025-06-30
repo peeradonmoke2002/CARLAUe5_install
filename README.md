@@ -56,7 +56,41 @@ This script will download and install Unreal Engine 5.5, install all prerequisit
 > [!NOTE]
 > This process takes a long time and needs a lot of disk space.*
 >
-> ![carlar disk space use](./images/carlar_mem_use.png)
+> ![carlar disk space use](./images/carlar_disk_use.png)
+
+**Step 5**: Try to Launching Carla - Unreal Editor
+
+```bash
+cmake --build Build --target launch
+```
+
+![carla unreal editor](./images/carla_unreal_editor.png)
+
+**Step 6**: Build a package with CARLA UE5
+
+```bash
+cmake --build Build --target package
+```
+The package will be generated in the directory `CARLA_PATH/Build/Package`
+
+**Step 7**: Run CARLA package
+
+first, navigate to the package directory:
+```bash
+cd CarlaUE5/Build/Package/Carla-0.10.0-Linux-Shipping/Linux
+```
+Then run the CARLA package:
+
+```bash
+./CarlaUnreal.sh -prefernvidia -nosound 
+```
+Case `ros2` interface
+
+```bash
+./CarlaUnreal.sh -prefernvidia -nosound -carla-ros2
+```
+
+![carla running](./images/carlar_package.png)
 
 ---
 
