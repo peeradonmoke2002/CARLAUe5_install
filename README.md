@@ -6,11 +6,21 @@ Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 5.5**
 
 ## 📋 Table of Contents
 
+* [💻 Recommended system](#recommended-system)
 * [🛠️ Installation](#installation)
 * [🐞 Troubleshooting](#troubleshooting)
 * [🔗 References](#references)
 
 ---
+
+
+## 💻 Recommended system
+
+* Intel i7 gen 9th - 11th / Intel i9 gen 9th - 11th / AMD Ryzen 7 / AMD Ryzen 9
+* +32 Gb RAM memory 
+* NVIDIA RTX 3070/3080/3090 / NVIDIA RTX 4090 or better
+* 16 Gb or more VRAM
+* Ubuntu 22.04 or Windows 11
 
 ## 🛠️ Installation
 
