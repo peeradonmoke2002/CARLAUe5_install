@@ -1,6 +1,6 @@
 # 🚗 CARLA Unreal Engine 5.5 Installation Guide
 
-Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 5.5**
+Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 5**
 
 ---
 
@@ -104,6 +104,9 @@ Launch CARLA:
 ```
 
 **For ROS2 interface:**
+
+> [!WARNING]
+> This version is not fully supported ros2 much for now if perfer to develop using ros2 I perfer use UE4 version.
 
 ```bash
 ./CarlaUnreal.sh -prefernvidia -nosound --ros2
