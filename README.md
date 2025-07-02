@@ -6,9 +6,9 @@ Guide for installing CARLA on **Ubuntu 22.04** using **Unreal Engine 4**
 
 ## 📋 Table of Contents
 
-* [💻 Recommended System](#recommended-system)
-* [🛠️ Installation](#installation)
-* [🔗 References](#references)
+* [💻 Recommended System](#-recommended-system)
+* [🛠️ Installation](#-installation)
+* [🔗 References](#-references)
 
 ---
 
