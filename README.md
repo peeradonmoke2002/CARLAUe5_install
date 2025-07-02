@@ -75,6 +75,9 @@ Next try to run Unreal Engine 4:
 cd path/to/your/UnrealEngine_4.26/Engine/Binaries/Linux && ./UE4Editor
 ```
 
+This shoud show like this:
+![unreal_engine_4](./images/unreal4.png)
+
 ### **Step 5:** Clone CARLA repository
 
 ```bash
@@ -107,7 +110,7 @@ source ~/.bashrc
 
 ### **Step 8:** Build CARLA
 
-First Compile the Python API client
+First Builds the Python CARLA.
 
 ```bash
 cd carla
@@ -120,7 +123,7 @@ cd PythonAPI/carla/dist
 pip install pip install carla-0.9.15-cp310-cp310-linux_x86_64.whl
 ```
 
-Finally, Compile the server
+Next, Builds Compile the server
 
 ```bash
 cd carla
@@ -131,6 +134,12 @@ Tihs shoud show like this:
 
 ![carla_unreal_engine_4](./images/carlar_unreal4.png)
 
+
+Finally, Builds CARLA and creates a packaged 
+
+```bash
+make package
+```
 
 
 
