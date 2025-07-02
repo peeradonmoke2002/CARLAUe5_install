@@ -1,159 +1,197 @@
 # 🚗 CARLA Unreal Engine 4 Installation Guide
 
-Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 4**
+Guide for installing CARLA on **Ubuntu 22.04** using **Unreal Engine 4**
 
 ---
 
 ## 📋 Table of Contents
 
-* [💻 Recommended system](#recommended-system)
+* [💻 Recommended System](#recommended-system)
 * [🛠️ Installation](#installation)
-* [🐞 Troubleshooting](#troubleshooting)
 * [🔗 References](#references)
 
 ---
 
+## 💻 Recommended System
 
-## 💻 Recommended system
+* Intel i7/i9 9th–11th gen, or AMD Ryzen 7/9
+* 32 GB RAM or more
+* NVIDIA RTX 3070/3080/3090/4090 (16 GB VRAM or more)
+* Ubuntu 22.04 (Windows 11 is also supported, but this guide covers Linux)
 
-* Intel i7 gen 9th - 11th / Intel i9 gen 9th - 11th / AMD Ryzen 7 / AMD Ryzen 9
-* +32 Gb RAM memory 
-* NVIDIA RTX 3070/3080/3090 / NVIDIA RTX 4090 or better
-* 16 Gb or more VRAM
-* Ubuntu 22.04 or Windows 11
+---
 
 ## 🛠️ Installation
 
-### **Step 1:** Install Software Requirements
+### **Step 1: Install Software Requirements**
 
 ```bash
 sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu focal main universe"
 sudo apt-get update
 sudo apt-get install build-essential clang-10 lld-10 g++-7 cmake ninja-build libvulkan1 python python3 python3-dev python3-pip libpng-dev libtiff5-dev libjpeg-dev tzdata sed curl unzip autoconf libtool rsync libxml2-dev git git-lfs
-sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-10/bin/clang++ 180 &&
-sudo update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-10/bin/clang 180 &&
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-10/bin/clang++ 180
+sudo update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-10/bin/clang 180
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 180
 ```
 
-### **Step 2:** Install python dependencies
+### **Step 2: Install Python Dependencies**
 
 ```bash
-pip install --user setuptools &&
-pip3 install --user -Iv setuptools &&
-pip install --user distro &&
-pip3 install --user distro &&
-pip install --user wheel &&
+pip install --user setuptools
+pip3 install --user -Iv setuptools
+pip install --user distro
+pip3 install --user distro
+pip install --user wheel
 pip3 install --user wheel auditwheel==4.0.0
 ```
 
-### **Step 3:** Install Unreal Engine 4
+### **Step 3: Clone Unreal Engine 4**
 
-To install Unreal Engine 4, you need to have a GitHub account linked to Unreal Engine's account . If you don't have this set up, please follow [this guide](https://www.unrealengine.com/en-US/ue-on-github).
+> [!NOTE]
+> You need a GitHub account linked to Epic Games. Follow [this guide](https://www.unrealengine.com/en-US/ue-on-github) if you haven’t set this up.
 
 ```bash
- git clone --depth 1 -b carla https://{YOUR_TOKEN}@github.com/CarlaUnreal/UnrealEngine.git ~/UnrealEngine_4.26
+git clone --depth 1 -b carla https://{YOUR_TOKEN}@github.com/CarlaUnreal/UnrealEngine.git ~/UnrealEngine_4.26
 ```
+
 Replace `{YOUR_TOKEN}` with your GitHub personal access token.
 
+---
 
-### **Step 4:** Build and Try to run Unreal Engine 4
-
-```bash
-cd path/to/your/UnrealEngine_4.26
-```
-build Unreal Engine 4 by running the following command:
-> [!NOTE]
-> This may take an hour or two depending on your system.
+### **Step 4: Build and Launch Unreal Engine 4**
 
 ```bash
-  ./Setup.sh && ./GenerateProjectFiles.sh && make
+cd ~/UnrealEngine_4.26
+./Setup.sh && ./GenerateProjectFiles.sh && make
 ```
 
-Next try to run Unreal Engine 4:
+> *This process can take 1–2 hours depending on your hardware.*
+
+To test the installation, run:
 
 ```bash
-cd path/to/your/UnrealEngine_4.26/Engine/Binaries/Linux && ./UE4Editor
+cd ~/UnrealEngine_4.26/Engine/Binaries/Linux
+./UE4Editor
 ```
 
-This shoud show like this:
-![unreal_engine_4](./images/unreal4.png)
+You should see the Unreal Engine 4 editor GUI appear.
 
-### **Step 5:** Clone CARLA repository
+![Unreal Engine 4 Editor](./images/unreal4.png)
+
+---
+
+### **Step 5: Clone the CARLA Repository**
 
 ```bash
 git clone -b ue4-dev https://github.com/carla-simulator/carla
 ```
 
-### **Step 6:** Download the latest assets
+---
+
+### **Step 6: Download Latest Assets**
 
 ```bash
 cd carla
 ./Update.sh
 ```
 
-### **Step 7:** Set Unreal Engine environment variable
+---
+
+### **Step 7: Set Unreal Engine Environment Variable**
+
+Edit your `.bashrc` to add:
 
 ```bash
-code ~/.bashrc
-```
-Add the following line to the end of the file:
-
-```bash
- export UE4_ROOT=path/to/your/UnrealEngine_4.26
+export UE4_ROOT=~/UnrealEngine_4.26
 ```
 
-Save and close the file, then run:
+Apply the changes:
 
 ```bash
 source ~/.bashrc
 ```
 
-### **Step 8:** Build CARLA
+---
 
-First Builds the Python CARLA.
+### **Step 8: Build CARLA**
+
+First, build the Python API:
 
 ```bash
 cd carla
 make PythonAPI
 ```
-Next, install python dependencies for CARLA:
 
-```bash 
-cd PythonAPI/carla/dist
-pip install pip install carla-0.9.15-cp310-cp310-linux_x86_64.whl
+Set up the Python environment for CARLA:
+
+```bash
+export CARLA_ROOT=/path/to/your/carla
+export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/dist/carla-0.9.15-py3.10-linux-x86_64.egg:$CARLA_ROOT/PythonAPI/carla
 ```
 
-Next, Builds Compile the server
+Install the CARLA Python package:
+
+```bash
+cd PythonAPI/carla/dist
+pip install carla-0.9.15-cp310-cp310-linux_x86_64.whl
+```
+
+Next, compile the server and launch CARLA in the Unreal Editor:
 
 ```bash
 cd carla
 make launch
 ```
+This will open the Unreal Engine editor with CARLA loaded.
+![CARLA Unreal Editor](./images/carlar_unreal4.png)
 
-Tihs shoud show like this:
+---
 
-![carla_unreal_engine_4](./images/carlar_unreal4.png)
-
-
-Finally, Builds CARLA and creates a packaged 
+To create a packaged build for distribution:
 
 ```bash
 make package
 ```
 
+To run the packaged CARLA server:
 
+```bash
+cd carla/Dist/CARLA_Shipping_0.9.15-327-g8e623cb41-dirty/LinuxNoEditor/
+./CarlaUE4.sh -prefernvidia
+```
+This will start the CARLA server.
 
+![CARLA Server](./images/carlar_ue4_package.png)
 
 
 ---
 
-## 🐞 Troubleshooting
+### **CARLA Makefile Commands Overview**
 
+| Command          | Description                                        |
+| ---------------- | -------------------------------------------------- |
+| `make help`      | Lists all available make commands                  |
+| `make launch`    | Launches the CARLA server in the Unreal Editor     |
+| `make PythonAPI` | Builds the CARLA Python client API                 |
+| `make LibCarla`  | Prepares the CARLA C++ library for import          |
+| `make package`   | Creates a standalone packaged CARLA build          |
+| `make clean`     | Removes all generated binaries and temporary files |
+| `make rebuild`   | Cleans and then launches CARLA (clean + launch)    |
+
+---
+
+### **Step 9: ROS2 Integration**
+
+To connect CARLA to ROS2, follow the [CARLA ROS2 Bridge documentation](https://carla.readthedocs.io/en/latest/ros2_bridge/).
+
+See my working example repository with ROS2 integration: [Carlar\_ros2](https://github.com/peeradonmoke2002/Carlar_ros2.git)
 
 ---
 
 ## 🔗 References
 
 * [📚 CARLA Documentation](https://carla.readthedocs.io/en/latest/)
-* [💻 CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
+* [💻 CARLA GitHub Repository](https://github.com/carla-simulator/carla)
+
+
 
