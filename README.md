@@ -1,6 +1,6 @@
-# 🚗 CARLA Unreal Engine 5 Installation Guide
+# 🚗 CARLA Unreal Engine 4 Installation Guide
 
-Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 5**
+Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 4**
 
 ---
 
@@ -24,157 +24,127 @@ Guide to install CARLA on **Ubuntu 22.04** using **Unreal Engine 5**
 
 ## 🛠️ Installation
 
-### **Step 1:** Clone the CARLA repository
+### **Step 1:** Install Software Requirements
 
 ```bash
-git clone -b ue5-dev https://github.com/carla-simulator/carla.git CarlaUE5
+sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu focal main universe"
+sudo apt-get update
+sudo apt-get install build-essential clang-10 lld-10 g++-7 cmake ninja-build libvulkan1 python python3 python3-dev python3-pip libpng-dev libtiff5-dev libjpeg-dev tzdata sed curl unzip autoconf libtool rsync libxml2-dev git git-lfs
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/lib/llvm-10/bin/clang++ 180 &&
+sudo update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-10/bin/clang 180 &&
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 180
 ```
 
-### **Step 2:** Get Unreal Engine 5.5 repository
+### **Step 2:** Install python dependencies
 
-To build CARLA, you need a special version of Unreal Engine 5.5 prepared for CARLA.
-First, connect your GitHub account to Epic Games: [Epic's Unreal Engine on GitHub](https://www.unrealengine.com/en-US/ue-on-github).
+```bash
+pip install --user setuptools &&
+pip3 install --user -Iv setuptools &&
+pip install --user distro &&
+pip3 install --user distro &&
+pip install --user wheel &&
+pip3 install --user wheel auditwheel==4.0.0
+```
 
-Once authorized, **clone Unreal Engine 5.5** (must be on the same commit as recommended by CARLA docs).
+### **Step 3:** Install Unreal Engine 4
 
-### **Step 3:** Set Git local credentials
+To install Unreal Engine 4, you need to have a GitHub account linked to Unreal Engine's account . If you don't have this set up, please follow [this guide](https://www.unrealengine.com/en-US/ue-on-github).
 
-Edit your Bash configuration:
+```bash
+ git clone --depth 1 -b carla https://{YOUR_TOKEN}@github.com/CarlaUnreal/UnrealEngine.git ~/UnrealEngine_4.26
+```
+Replace `{YOUR_TOKEN}` with your GitHub personal access token.
+
+
+### **Step 4:** Build and Try to run Unreal Engine 4
+
+```bash
+cd path/to/your/UnrealEngine_4.26
+```
+build Unreal Engine 4 by running the following command:
+> [!NOTE]
+> This may take an hour or two depending on your system.
+
+```bash
+  ./Setup.sh && ./GenerateProjectFiles.sh && make
+```
+
+Next try to run Unreal Engine 4:
+
+```bash
+cd path/to/your/UnrealEngine_4.26/Engine/Binaries/Linux && ./UE4Editor
+```
+
+### **Step 5:** Clone CARLA repository
+
+```bash
+git clone -b ue4-dev https://github.com/carla-simulator/carla
+```
+
+### **Step 6:** Download the latest assets
+
+```bash
+cd carla
+./Update.sh
+```
+
+### **Step 7:** Set Unreal Engine environment variable
 
 ```bash
 code ~/.bashrc
 ```
-
-Add this line to the end (replace with your actual info):
+Add the following line to the end of the file:
 
 ```bash
-export GIT_LOCAL_CREDENTIALS=[Your_Username]@[Your_Token]
+ export UE4_ROOT=path/to/your/UnrealEngine_4.26
 ```
 
-> Replace `[Your_Username]` and `[Your_Token]` with your GitHub username and a personal access token (PAT).
-
-Reload the config:
+Save and close the file, then run:
 
 ```bash
 source ~/.bashrc
 ```
 
-### **Step 4:** Build CARLA
+### **Step 8:** Build CARLA
+
+First Compile the Python API client
 
 ```bash
-cd CarlaUE5
-sudo -E ./CarlaSetup.sh
+cd carla
+make PythonAPI
+```
+Next, install python dependencies for CARLA:
+
+```bash 
+cd PythonAPI/carla/dist
+pip install pip install carla-0.9.15-cp310-cp310-linux_x86_64.whl
 ```
 
-> This will download and install Unreal Engine 5.5, prerequisites, and build CARLA.
-> **Note:** This process can take several hours and uses a lot of disk space.
->
-> <p align="center">
->  <img src="./images/carlar_disk_use.png" alt="CARLA disk space use" width="450">
-> </p>
-
-### **Step 5:** Launch CARLA in Unreal Editor
+Finally, Compile the server
 
 ```bash
-cmake --build Build --target launch
+cd carla
+make launch
 ```
 
-![CARLA Unreal Editor](./images/carla_unreal_editor.png)
+Tihs shoud show like this:
 
-### **Step 6:** Build the CARLA package
+![carla_unreal_engine_4](./images/carlar_unreal4.png)
 
-```bash
-cmake --build Build --target package
-```
 
-The generated package will be in `CarlaUE5/Build/Package`.
 
-### **Step 7:** Run the CARLA package
 
-Navigate to the package directory:
 
-```bash
-cd CarlaUE5/Build/Package/Carla-0.10.0-Linux-Shipping/Linux
-```
-
-Launch CARLA:
-
-```bash
-./CarlaUnreal.sh -prefernvidia -nosound 
-```
-
-**For ROS2 interface:**
-
-> [!WARNING]
-> This version is not fully supported ros2 much for now if perfer to develop using ros2 I perfer use UE4 version.
-
-```bash
-./CarlaUnreal.sh -prefernvidia -nosound --ros2
-```
-
-![CARLA running](./images/carlar_package.png)
 
 ---
 
 ## 🐞 Troubleshooting
 
-### ⚠️ CMake Version Error
-
-If you see:
-
-```
-CMake Error at CMakeLists.txt:16 (cmake_minimum_required):
-  CMake 3.27.2 or higher is required. You are running version 3.22.1
-```
-
-Check your active CMake version:
-
-```bash
-cmake --version
-# Should show: cmake version 3.28.3 (or newer)
-```
-
-If `sudo cmake --version` shows an old version:
-
-```bash
-sudo cmake --version
-# cmake version 3.22.1 (wrong)
-```
-
-**Solution:**
-Edit `CarlaSetup.sh` to explicitly set the desired CMake path. For example:
-
-```bash
-/opt/cmake-3.28.3-linux-x86_64/bin/cmake -G Ninja -S . -B Build \
-    --toolchain=$PWD/CMake/Toolchain.cmake \
-    -DLAUNCH_ARGS="-prefernvidia" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DENABLE_ROS2=ON \
-    -DPython_ROOT_DIR=${python_root} \
-    -DPython3_ROOT_DIR=${python_root} \
-    -DCARLA_UNREAL_ENGINE_PATH=$CARLA_UNREAL_ENGINE_PATH
-```
-
-### 🔒 Permissions Error
-
-If you see a permission error during build:
-
-```bash
-sudo chown -R $(whoami):$(whoami) Build/
-# Or for your workspace:
-sudo chown -R $(whoami):$(whoami) /path/to/CarlaUE5/Build/
-```
-
-Example:
-
-```bash
-sudo chown -R $(whoami):$(whoami) /media/peeradon/Peeradon-SSD/CarlaUE5/Build
-```
 
 ---
 
 ## 🔗 References
 
-* [📚 CARLA Documentation](https://carla-ue5.readthedocs.io/en/latest/)
+* [📚 CARLA Documentation](https://carla.readthedocs.io/en/latest/)
 * [💻 CARLA GitHub Repository](https://github.com/carla-simulator/carla.git)
 
