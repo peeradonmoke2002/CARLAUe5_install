@@ -67,7 +67,7 @@ python3 -c "import carla; print('CARLA Python API installed successfully!')"
 > *If you see the message "CARLA Python API installed successfully!", the installation was successful.*
 > *You can now use the CARLA Python API in your projects.*
 
-### **Step 4: Let’s update the paths for Carla in `~/.bashrc`
+### **Step 4: Let’s update the paths for Carla in `~/.bashrc`**
 
 First open `~/.bashrc`
 
