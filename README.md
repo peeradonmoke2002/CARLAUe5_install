@@ -41,7 +41,7 @@ tar -xvzf CARLA_0.9.15.tar.gz -C ~/carlar_simulator
 
 ### **Step 3: Install CARLA Python API**
 
-First Dowload the Carlar Python API Wheel file from [CARLA Python API .whl](/gezp/carla_ros/releases/download/carla-0.9.15-ubuntu-22.04/carla-0.9.15-cp310-cp310-linux_x86_64.whl) and [CARLAR Python API .whl](/gezp/carla_ros/releases/download/carla-0.9.15-ubuntu-22.04/carla-0.9.15-py3.10-linux-x86_64.egg)
+First Dowload the Carlar Python API Wheel file from [CARLA Python API .whl](/gezp/carla_ros/releases/download/carla-0.9.15-ubuntu-22.04/carla-0.9.15-cp310-cp310-linux_x86_64.whl) and [CARLAR Python API .egg](/gezp/carla_ros/releases/download/carla-0.9.15-ubuntu-22.04/carla-0.9.15-py3.10-linux-x86_64.egg)
 
 And place it in the `~/carla_simulator/PythonAPI/carla/dist/`
 
