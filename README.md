@@ -7,6 +7,7 @@ Guide for installing CARLA on **Ubuntu 22.04** using **Unreal Engine 4**
 ## 📋 Table of Contents
 
 * [💻 Recommended System](#-recommended-system)
+* [⚡ Quick Installation](#-quick-installation)  <- Recommended do if you want to quickly set up CARLA
 * [🛠️ Installation](#-installation)
 * [🔗 References](#-references)
 
@@ -20,6 +21,82 @@ Guide for installing CARLA on **Ubuntu 22.04** using **Unreal Engine 4**
 * Ubuntu 22.04 (Windows 11 is also supported, but this guide covers Linux)
 
 ---
+## ⚡ Quick Installation
+This guide to install binary CARLA on Ubuntu 22.04 using Unreal Engine 4 is designed for users who want to quickly set up CARLA without building from source.
+
+### **Step 1: Install Carlar Binary**
+Plase Dowload form Here [CARLA_0.9.15.tar.gz](https://tiny.carla.org/carla-0-9-15-linux)
+
+### **Step 2: Setup Work directory and Extract the Archive**
+
+```bash
+cd ~/Downloads
+## Copy the downloaded file to your home directory
+cp CARLA_0.9.15.tar.gz ~/
+## Extract the CARLA archive to a directory named carla_simulator in your home directory
+mkdir -p ~/carla_simulator
+## Extract the contents of the CARLA archive
+tar -xvzf CARLA_0.9.15.tar.gz -C ~/carlar_simulator
+```
+
+### **Step 3: Install CARLA Python API**
+
+First Dowload the Carlar Python API Wheel file from [CARLA Python API .whl](/gezp/carla_ros/releases/download/carla-0.9.15-ubuntu-22.04/carla-0.9.15-cp310-cp310-linux_x86_64.whl) and [CARLAR Python API .whl](/gezp/carla_ros/releases/download/carla-0.9.15-ubuntu-22.04/carla-0.9.15-py3.10-linux-x86_64.egg)
+
+And place it in the `~/carla_simulator/PythonAPI/carla/dist/`
+
+```bash
+cd ~/Downloads
+## Copy the downloaded wheel file to the CARLA Python API directory
+cp carla-0.9.15-cp310-cp310-linux_x86_64.whl ~/carla_simulator/PythonAPI/carla/dist/
+cp carla-0.9.15-py3.10-linux-x86_64.egg ~/carla_simulator/PythonAPI/carla/dist/
+```
+
+Then install the CARLA Python API using pip:
+
+```bash
+cd ~/carlar_simulator/PythonAPI/carla/dist/
+pip install carla-0.9.15-cp310-cp310-linux_x86_64.whl
+```
+Then test the installation by running a simple Python script:
+
+```bash
+python3 -c "import carla; print('CARLA Python API installed successfully!')"
+```
+> [!NOTE]
+> *If you see the message "CARLA Python API installed successfully!", the installation was successful.*
+> *You can now use the CARLA Python API in your projects.*
+
+### **Step 4: Let’s update the paths for Carla in `~/.bashrc`
+
+First open `~/.bashrc`
+
+```bash
+code ~/.bashrc
+```
+Set paths in `~/.bashrc`
+
+```bash
+export CARLA_ROOT=/home/$(whoami)/carla_simulator
+export PYTHONPATH=$PYTHONPATH:${CARLA_ROOT}/PythonAPI/carla/dist/carla-0.9.14-py3.10-linux-x86_64.egg
+```
+Then apply the changes:
+
+```bash
+source ~/.bashrc
+```
+
+### **Step 5: Run CARLA**
+Now you can run CARLA by executing the following command:
+```bash
+cd ~/carla_simulator
+./CarlaUE4.sh -prefernvidia
+```
+It should see Carlar below:
+![CARLA Server](./images/carlar_ue4_package.png)
+
+> [!NOTE]
+> For detailed build steps, see the [Installation](#-installation) section below.
 
 ## 🛠️ Installation
 
